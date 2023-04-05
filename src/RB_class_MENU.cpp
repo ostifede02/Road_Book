@@ -11,8 +11,7 @@ void MENU_widget::AppLoop(void){
     int menu_index = 0;
 
     while (true){
-        PrintOnDisplay(menu_pages[menu_index]);
-        Serial.println(menu_pages[menu_index]);
+        PrintOnDisplay(menu_pages[menu_index], MENU_TEXT);
 
         switch (GetInterruptCommand()){
             case 'r':
@@ -49,8 +48,6 @@ void MENU_widget::OpenWidget(int widget_index){
         widget_index == 1       ->      TEMPERATURE
         widget_index == 2       ->      SPEED
     */
-
-    Serial.println("\nThe page opened is: " + menu_pages[widget_index] + "\n");
 
     switch(widget_index){
         case 0:

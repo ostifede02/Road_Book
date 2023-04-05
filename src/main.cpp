@@ -9,15 +9,10 @@
 
 MENU_widget RoadBookApp;
 
-// extern unsigned char image[];
-// extern Paint paint;    // width should be the multiple of 8 
-// extern Epd epd;
-
-
-
 void setup() {
     Serial.begin(115200);
     RoadBookApp.AppLoop();
+
 }
  
 

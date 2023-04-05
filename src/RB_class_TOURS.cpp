@@ -8,7 +8,6 @@ void ToursWidget::isToursPageCalled(void){
     while(isTourPageOpen){
         isTourPageOpen = SelectFile(number_of_files);
     }
-    Serial.println("\n\nTours page quitted!\n\n");
     return;
 }
 
@@ -16,7 +15,6 @@ void ToursWidget::isToursPageCalled(void){
 int ToursWidget::ReadFilesList(void){
     int file_list_index = 0;
 
-    Serial.println("The following tours have been found:");
     
     if (!SPIFFS.begin(true)) {
         Serial.println("An Error has occurred while mounting SPIFFS");
@@ -31,8 +29,6 @@ int ToursWidget::ReadFilesList(void){
         // file_list_buffer[file_list_index] = '/';
         file_list_buffer[file_list_index] = file.name();
 
-        Serial.println(file_list_buffer[file_list_index]);
-
         file = root.openNextFile();
         file_list_index += 1;
     }
@@ -42,11 +38,13 @@ int ToursWidget::ReadFilesList(void){
 
 bool ToursWidget::SelectFile(int number_of_files){
     int scroll_file_index = 0;
+    String sub_str;
 
-    Serial.println("\nopen a file by holding the right button");
-    
-    Serial.println(file_list_buffer[0]);
-    PrintOnDisplay(file_list_buffer[0]);
+
+    sub_str = file_list_buffer[scroll_file_index];
+    sub_str = sub_str.substring(0, (sub_str.length() - 4));
+
+    PrintOnDisplay(sub_str, TOUR_LABEL_TEXT);
 
     while(true){
         switch (GetInterruptCommand()){
@@ -66,9 +64,11 @@ bool ToursWidget::SelectFile(int number_of_files){
         }
         scroll_file_index = min(scroll_file_index, number_of_files - 1);
         scroll_file_index = max(scroll_file_index, 0);
-        
-        PrintOnDisplay(file_list_buffer[scroll_file_index]);
-        Serial.println(file_list_buffer[scroll_file_index]);
+
+        sub_str = file_list_buffer[scroll_file_index];
+        sub_str = sub_str.substring(0, (sub_str.length() - 4));
+
+        PrintOnDisplay(sub_str, TOUR_LABEL_TEXT);
     }
 }
 
@@ -76,7 +76,6 @@ void ToursWidget::OpenReadFile(int file_index){
     int line_index = 0;
     file = SPIFFS.open('/' + file_list_buffer[file_index]);
     
-    Serial.println("\nyou have opened the file: " + file_list_buffer[file_index]);
 
     while(file.available()){
         file_rows_buffer[line_index] = file.readStringUntil('\n');
@@ -92,7 +91,8 @@ void ToursWidget::OpenReadFile(int file_index){
 void ToursWidget::BrowsFileRows(int number_of_rows){
     int scroll_line_index = 0;
 
-    Serial.println(file_rows_buffer[0]);
+    PrintOnDisplay(file_rows_buffer[0], TOUR_PLAIN_TEXT);
+
 
     while(true){
         switch (GetInterruptCommand()){
@@ -110,8 +110,6 @@ void ToursWidget::BrowsFileRows(int number_of_rows){
         scroll_line_index = min(scroll_line_index, number_of_rows - 1);
         scroll_line_index = max(scroll_line_index, 0);
 
-        PrintOnDisplay(file_rows_buffer[scroll_line_index]);
-
-        Serial.println(file_rows_buffer[scroll_line_index]);
+        PrintOnDisplay(file_rows_buffer[scroll_line_index], TOUR_PLAIN_TEXT);
     }
 }

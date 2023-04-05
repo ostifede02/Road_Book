@@ -58,15 +58,9 @@ int EpdIf::IfInit(void) {
     pinMode(DC_PIN, OUTPUT);
     pinMode(BUSY_PIN, INPUT);
 
-    Serial.println("\t\t\t\tinside IfInit pass 1");
-
     SPI.begin(SCK_PIN, MISO_PIN, MOSI_PIN, SS_PIN);
-    Serial.println("\t\t\t\tinside IfInit pass 2");
-
     SPI.endTransaction(); // Federico put this
-    Serial.println("\t\t\t\tinside IfInit pass 3");
     SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
-    Serial.println("\t\t\t\tinside IfInit pass 4");
 
     return 0;
 }

@@ -88,31 +88,21 @@ Epd::Epd() {
 int Epd::Init() {
     /* this calls the peripheral hardware interface, see epdif */
     
-    Serial.println("\t\tinside pass 0");
-    
     if (IfInit() != 0) {
         return -1;
     }
 
-    Serial.println("\t\tinside pass 1");
-	
 	Reset();
-    Serial.println("\t\tinside pass 2");
-	
+
     /* EPD hardware init start */
 	WaitUntilIdle();   
-    Serial.println("\t\tinside pass 3");
-
 	SendCommand(0x12);  //SWRESET
-    Serial.println("\t\tinside pass 4");
-
 	WaitUntilIdle();   
-	
+
 	SendCommand(0x01); //Driver output control      
 	SendData(0x27);
 	SendData(0x01);
 	SendData(0x00);
-    Serial.println("\t\tinside pass 5");
 	
 	SendCommand(0x11); //data entry mode       
 	SendData(0x03);
@@ -122,13 +112,9 @@ int Epd::Init() {
 	SendCommand(0x21); //  Display update control
 	SendData(0x00);
 	SendData(0x80);	
-
 	SetMemoryPointer(0, 0);
-    Serial.println("\t\tinside pass 6");
 
 	WaitUntilIdle();
-    Serial.println("\t\tinside pass 7");
-
     SetLut_by_host(WS_20_30);
     /* EPD hardware init end */
     return 0;

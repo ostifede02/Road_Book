@@ -47,9 +47,9 @@ void MenuLabel(String input_str){
 
     paint.Clear(UNCOLORED);
 
-    paint.DrawStringAt(20, 0, str_to_print, &Font20, COLORED);
+    paint.DrawStringAt(80, 0, str_to_print, &Font24, COLORED);
 
-    epd.SetFrameMemory(paint.GetImage(), 74, 0, paint.GetWidth(), paint.GetHeight());
+    epd.SetFrameMemory(paint.GetImage(), 52, 0, paint.GetWidth(), paint.GetHeight());
     epd.DisplayFrame();
 
     return;
@@ -78,9 +78,9 @@ void TourFilesLabel(String input_str){
 
     paint.Clear(UNCOLORED);
 
-    paint.DrawStringAt(0, 20, str_to_print, &Font20, COLORED);
+    paint.DrawStringAt(5, 0, str_to_print, &Font20, COLORED);
 
-    epd.SetFrameMemory(paint.GetImage(), 74, 0, paint.GetWidth(), paint.GetHeight());
+    epd.SetFrameMemory(paint.GetImage(), 54, 0, paint.GetWidth(), paint.GetHeight());
     epd.DisplayFrame();
     
     return;
@@ -89,13 +89,7 @@ void TourFilesLabel(String input_str){
 
 void PlainTextLabel(String input_str){
     char str_to_print[MAX_DISPLAY_STRING_LENGTH];
-    char str_row[MAX_CHAR_ROW];
-    char sub_str_to_print[MAX_CHAR_ROW];
-
-    for(int i=0; i<input_str.length(); ++i){
-        str_to_print[i] = input_str[i];
-    }
-    str_to_print[input_str.length()] = '\0';
+    String sub_str;
 
     if (epd.Init() != 0) {
         Serial.println("e-Paper init failed");
@@ -103,7 +97,7 @@ void PlainTextLabel(String input_str){
     }
 
     epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
-    epd.DisplayFrame();
+    epd.DisplayFrame_Partial();
 
     paint.SetRotate(ROTATE_90);
     paint.SetWidth(128); //120
@@ -111,28 +105,31 @@ void PlainTextLabel(String input_str){
 
     paint.Clear(UNCOLORED);
 
+    int start = 0, end = 0, row = 0;
+    while (end < input_str.length()) { // finché non si arriva alla fine della stringa
+        if (end - start + 1 > 21 || input_str[end] == '\n') { // se la sottostringa supera i 21 caratteri o si raggiunge una nuova linea
+            if (input_str[end] != '\n') { // se l'ultimo carattere non è una nuova linea
+                while (input_str[end] != ' ') { // cerca l'ultimo spazio prima della nuova linea
+                    end--;
+                }
+            }
+            sub_str = input_str.substring(start, end); // stampa la sottostringa
+            sub_str.toCharArray(str_to_print, sub_str.length() + 1);
+            paint.DrawStringAt(0, 20*row + 5, str_to_print, &Font20, COLORED);
 
-    int total_rows = (input_str.length() / MAX_CHAR_ROW) +1;
-    int end_row_char_index;
-
-    for(int row_index = 1; row_index <= total_rows; row_index++){
-        end_row_char_index  = row_index * MAX_CHAR_ROW;
-        while(str_to_print[end_row_char_index] != ' '){
-            end_row_char_index -= 1;
+            row += 1;
+            start = end + 1; // aggiorna l'indice di partenza
         }
-        for(int sub_str_index = (row_index-1) * MAX_CHAR_ROW; sub_str_index < row_index * MAX_CHAR_ROW; sub_str_index++){
-            sub_str_to_print[sub_str_index - MAX_CHAR_ROW * row_index] = input_str[sub_str_index];
-        }
-
-        paint.DrawStringAt(0, 25 * (row_index-1), sub_str_to_print, &Font20, COLORED);
+        end++;
     }
+    
+    sub_str = input_str.substring(start); // stampa l'ultima sottostringa
+    sub_str.toCharArray(str_to_print, sub_str.length() + 1);
+    str_to_print[sub_str.length()-1] = '\0';
+
+    paint.DrawStringAt(0, 20*row + 5, str_to_print, &Font20, COLORED);
 
     epd.SetFrameMemory(paint.GetImage(), 0, 0, paint.GetWidth(), paint.GetHeight());
-    epd.DisplayFrame();
-}
-
-
-void Print(char str_to_print[]){
-    return;
+    epd.DisplayFrame_Partial();
 }
 
