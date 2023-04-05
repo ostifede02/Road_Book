@@ -1,11 +1,8 @@
 #include "RB_class_TOURS.h"
 #include "RB_defines.h"
 #include "RB_functions.h"
-#include "Display_print.h"
-
-extern unsigned char image[];
-extern Paint paint;    // width should be the multiple of 8 
-extern Epd epd;
+#include "Display_print_Adafruit_lib.h"
+// #include "Display_print.h"
 
 
 class MENU_widget{    
