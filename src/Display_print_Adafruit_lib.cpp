@@ -29,7 +29,7 @@ void MenuLabel(String input_str){
     char str_to_print[MAX_DISPLAY_STRING_LENGTH];
     input_str.toCharArray(str_to_print, input_str.length()+1);
 
-    display.setPartialWindow(30, 52, 250, 30); //30, 76, 200, 24
+    display.setPartialWindow(0, 0, 296, 128); //30, 76, 200, 24
     u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
     display.firstPage();
 
@@ -46,7 +46,7 @@ void TourFilesLabel(String input_str){
     char str_to_print[MAX_DISPLAY_STRING_LENGTH];
     input_str.toCharArray(str_to_print, input_str.length()+1);
 
-    display.setPartialWindow(30, 52, 250, 30);
+    display.setPartialWindow(0, 0, 296, 128);
     u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
     display.firstPage();
 
@@ -63,9 +63,10 @@ void PlainTextLabel(String input_str){
     char str_to_print[MAX_DISPLAY_STRING_LENGTH];
     String sub_str;
 
-    Serial.println("pass 1");
-
+    display.setPartialWindow(0, 0, 296, 128);
+    display.fillScreen(GxEPD_WHITE);
     u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
+    display.firstPage();
 
     int start = 0, end = 0, row = 0;
     while (end < input_str.length()) { // finché non si arriva alla fine della stringa
@@ -78,15 +79,8 @@ void PlainTextLabel(String input_str){
             sub_str = input_str.substring(start, end); // stampa la sottostringa
             sub_str.toCharArray(str_to_print, sub_str.length() + 1);
 
-            display.setPartialWindow(0, 24*row, 296, 24);
-            u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
-            display.firstPage();
-
-            do{
-                display.fillScreen(GxEPD_WHITE);
-                u8g2Fonts.setCursor(0, row*24);             //cursor(x,y)
-                u8g2Fonts.print(str_to_print);   //print the text
-            }while (display.nextPage());
+            u8g2Fonts.setCursor(0, 24*(row+1));            //cursor(x,y)
+            u8g2Fonts.print(str_to_print);   //print the text
 
             row += 1;
             start = end + 1; // aggiorna l'indice di partenza
@@ -98,16 +92,10 @@ void PlainTextLabel(String input_str){
     sub_str.toCharArray(str_to_print, sub_str.length() + 1);
     str_to_print[sub_str.length()-1] = '\0';
 
-    display.setPartialWindow(0, 24*row, 296, 24);
-    u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
-    display.firstPage();
+    u8g2Fonts.setCursor(0, 24*(row+1));             //cursor(x,y)
+    u8g2Fonts.print(str_to_print);   //print the text
 
-    do{
-        display.fillScreen(GxEPD_WHITE);
-        u8g2Fonts.setCursor(0, row*24);             //cursor(x,y)
-        u8g2Fonts.print(str_to_print);   //print the text
-    }while (display.nextPage());
-
+    display.nextPage();
     return;
 }
 

@@ -12,9 +12,9 @@
 #include <GxEPD2_3C.h>
 #include <Fonts/FreeMonoBold9pt7b.h>
 
-#include "bitmaps/Bitmaps200x200.h" // 1.54" b/w
+// #include "bitmaps/Bitmaps200x200.h" // 1.54" b/w
 //#include "bitmaps/Bitmaps128x250.h" // 2.13" b/w
-//#include "bitmaps/Bitmaps128x296.h" // 2.9"  b/w
+#include "bitmaps/Bitmaps128x296.h" // 2.9"  b/w
 //#include "bitmaps/Bitmaps176x264.h" // 2.7"  b/w
 //#include "bitmaps/Bitmaps400x300.h" // 4.2"  b/w
 //#include "bitmaps/Bitmaps640x384.h" // 7.5"  b/w

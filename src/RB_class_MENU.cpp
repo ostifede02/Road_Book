@@ -24,7 +24,7 @@ void MENU_widget::AppLoop(void){
                 OpenWidget(menu_index);
                 break;
             case 'L':
-                /* code */
+                PrintOnDisplay(" ", MENU_TEXT);
                 break;       
             default:
                 break;
