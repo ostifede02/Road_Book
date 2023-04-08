@@ -25,5 +25,10 @@
 #define UNCOLORED   1
 
 
+#define CLK 27
+#define DT 12
+#define SW 14
+
+
 
 #endif

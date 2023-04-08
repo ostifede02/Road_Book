@@ -1,3 +1,6 @@
+#ifndef CLASS_MENU
+#define CLASS_MENU
+
 #include "RB_class_TOURS.h"
 #include "RB_defines.h"
 #include "RB_functions.h"
@@ -15,3 +18,6 @@ class MENU_widget{
     public:
         void AppLoop(void);
 };
+
+
+#endif

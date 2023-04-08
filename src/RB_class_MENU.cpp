@@ -4,13 +4,74 @@ void MENU_widget::MenuInit(void){
     return;
 }
 
+// struct event{
+//     char command;
+//     bool consumed;
+// };
+
+// struct tab_data{
+//     String string;
+//     int font;
+//     int size;
+//     int label;
+// };
+
+// void tour(event* e, tab_data* data){
+//     data->font = 1;
+//     data->string = "In Tour";
+
+//     if(e->consumed == false){
+//         if(e->command == 'R'){
+//             // Read Files
+//             e->consumed = true;
+//         }else if(e->command == 'L'){
+//             // 
+//             e->consumed = false;
+//         }
+//     }
+// }
+// void temp(event* e){
+//     e->consumed = false;
+// }
+
+// void tabManager(event* e){
+//     int index = 0; // tab index
+//     switch (index)
+//     {
+//     case 0:
+//         tour(e);
+//         break;
+//     case 1:
+//         temp(e);
+//         break;
+//     default:
+//         break;
+//     }
+//     if(e->consumed == false){
+//         // do stuff with command
+//         // if the commad is used set consumed to true
+//         if(e->command == 'r'){
+//             e->consumed = true;
+//         }
+//     }
+// }
+
 void MENU_widget::AppLoop(void){
     MenuInit();
     
     char cmd;
     int menu_index = 0;
 
+    // event e;
+
     while (true){
+    //     e.command = GetInterruptCommand();
+    //     e.consumed = false;
+    //     tabManager(&e);
+    //     if(e.consumed == false){
+    //         // use the command
+    //     }
+
         PrintOnDisplay(menu_pages[menu_index], MENU_TEXT);
 
         switch (GetInterruptCommand()){

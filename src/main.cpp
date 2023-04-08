@@ -25,15 +25,10 @@ extern U8G2_FOR_ADAFRUIT_GFX u8g2Fonts;
 void setup() {
     Serial.begin(115200);
 
-    // if (epd.Init() != 0) {
-    //     Serial.print("e-Paper init failed");
-    //     return;
-    // }
-    // epd.ClearFrameMemory(0xFF);   // bit set = white, bit reset = black
-    // epd.DisplayFrame();
+	pinMode(CLK, INPUT_PULLUP);
+	pinMode(DT, INPUT_PULLUP);
+	pinMode(SW, INPUT_PULLUP);
 
-    // epd.SetFrameMemory_Base(IMAGE_DATA);
-    // epd.DisplayFrame();
 
     display.init();
     display.setTextColor(GxEPD_BLACK);
