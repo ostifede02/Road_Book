@@ -41,7 +41,6 @@ void setup() {
     u8g2Fonts.setBackgroundColor(GxEPD_WHITE);
     u8g2Fonts.setFont(u8g2_font_fub20_tr);   //font is set
 
-
     RoadBookApp.AppLoop();
 }
  
